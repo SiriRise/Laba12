@@ -18,7 +18,7 @@ def custom_sum(x, t):
     while True:
 
         curr_x = np.linalg.det((x * factor).astype("float64")) # Вычисляем определитель матрицы
-        curr_term = Decimal(curr_x) / Decimal(factor) # Вычисляем текущий член ряда
+        curr_term = Decimal((curr_x) / factor) # Вычисляем текущий член ряда
         curr_sum += sign * curr_term # Прибавляем его к результату
 
         # Проверка знаков после запятой
