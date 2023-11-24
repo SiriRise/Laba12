@@ -5,20 +5,20 @@
 import numpy as np
 import random
 from decimal import Decimal, getcontext
-from math import factorial
 
 def custom_sum(x, t):
 
     n = 1 # Номер слогаемого
     sign = 1 # Переменная для смены знака
-    factor = factorial(2 * n + 1) # Вычисление факториала
-    curr_sum = 0 # Переменная результата
+    factorial = 1 # Вычисление факториала
+    curr_sum = Decimal(0) # Переменная результата
 
     # Бесконечный цикл для вычисления ряда
     while True:
 
-        curr_x = np.linalg.det((x * factor).astype("float64")) # Вычисляем определитель матрицы
-        curr_term = Decimal((curr_x) / factor) # Вычисляем текущий член ряда
+        factorial *= (2 * n) * (2 * n + 1) # Вычисление факториала
+        curr_x = np.linalg.det((x * factorial).astype("float64")) # Вычисляем определитель матрицы
+        curr_term = Decimal((curr_x) / factorial) # Вычисляем текущий член ряда
         curr_sum += sign * curr_term # Прибавляем его к результату
 
         # Проверка знаков после запятой
@@ -26,10 +26,9 @@ def custom_sum(x, t):
             break
         n += 1
         sign = -sign # Меняем знак
-        factor = factorial(2 * n + 1)
+
+
     return curr_sum
-
-
 try:
     # Ввод значения t (количества знаков после запятой)
     t = int(input("Введите число t, являющееся количеством знаков после запятой (точностью): "))
