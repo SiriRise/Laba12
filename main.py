@@ -6,34 +6,28 @@ import numpy as np
 import random
 from decimal import Decimal, getcontext
 
+
+
 def custom_sum(x, t):
 
     n = 1 # Номер слогаемого
-    sign = 1 # Переменная для смены знака
-    factorial = 1 
+    z = 1
     curr_sum = 0 # Переменная результата
-
+    curr_term = 1 # Переменная результата
     # Бесконечный цикл для вычисления ряда
-    while True:
-
-        factorial *= (2 * n) * (2 * n + 1) # Вычисление факториала
-        curr_x = np.linalg.det((x * factorial).astype("float64")) # Вычисляем определитель матрицы
-        curr_term = Decimal((curr_x) / factorial) # Вычисляем текущий член ряда
-        curr_sum += sign * curr_term # Прибавляем его к результату
-
-        # Проверка знаков после запятой
-        if Decimal(curr_term).as_tuple().exponent * (-1) < t:
-            break
+    while abs(curr_term) < t:
+        z *= (2 * n) * (2 * n + 1) # Вычисляем факториала
+        curr_x = np.linalg.det(x * z) # Вычисляем определитель матрицы
+        curr_term = Decimal(curr_x) / z # Вычисляем текущий член ряда
+        curr_sum += curr_term * (-1) ** n *(-1)# Прибавляем его к результату
         n += 1
-        sign = -sign # Меняем знак
-
 
     return curr_sum
 try:
     # Ввод значения t (количества знаков после запятой)
     t = int(input("Введите число t, являющееся количеством знаков после запятой (точностью): "))
-    while t > 100 or t < 1:  # ошибка в случае введения слишком малой точности
-        t = int(input("Вы ввели число, неподходящее по условию, введите число t, большее или равное 1: \n"))
+    while t > 100 or t <= 1:  # ошибка в случае введения слишком малой точности
+        t = int(input("Вы ввели число, неподходящее по условию, введите число t, большее 1: \n"))
 
     print()
 
